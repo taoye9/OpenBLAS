@@ -164,6 +164,9 @@ endif
 endif
 endif
 
+ifeq ($(BUILD_BFLOAT16_ONLY),1)
+B3= test_bgemm
+endif
 ifeq ($(BUILD_BFLOAT16),1)
 B3= test_sbgemm
 endif
@@ -366,6 +369,11 @@ zblat3 : zblat3.$(SUFFIX) ../$(LIBNAME)
 	$(FC) $(FLDFLAGS) -o zblat3 zblat3.$(SUFFIX) ../$(LIBNAME) $(EXTRALIB) $(CEXTRALIB)
 endif
 
+ifeq ($(BUILD_BFLOAT16_ONLY),1)
+test_bgemm : compare_sgemm_bgemm.c ../$(LIBNAME)
+	$(CC) $(CLDFLAGS) -o test_bgemm compare_sgemm_bgemm.c ../$(LIBNAME) $(EXTRALIB) $(CEXTRALIB)
+endif
+
 ifeq ($(BUILD_BFLOAT16),1)
 test_sbgemm : compare_sgemm_sbgemm.c ../$(LIBNAME)
 	$(CC) $(CLDFLAGS) -o test_sbgemm compare_sgemm_sbgemm.c ../$(LIBNAME) $(EXTRALIB) $(CEXTRALIB)
@@ -387,7 +395,7 @@ clean:
 	@rm -f *.$(SUFFIX) *.$(PSUFFIX) gmon.$(SUFFIX)ut *.SUMM *.cxml *.exe *.pdb *.dwf \
 	sblat1 dblat1 cblat1 zblat1 \
 	sblat2 dblat2 cblat2 zblat2 \
-	test_sbgemm sblat3 dblat3 cblat3 zblat3 \
+	test_bgemm test_sbgemm sblat3 dblat3 cblat3 zblat3 \
 	sblat1p dblat1p cblat1p zblat1p \
 	sblat2p dblat2p cblat2p zblat2p \
 	sblat3p dblat3p cblat3p zblat3p \

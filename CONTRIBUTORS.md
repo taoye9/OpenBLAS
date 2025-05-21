@@ -248,3 +248,4 @@ In chronological order:
 * Ye Tao <ye.tao@arm.com>
   * [2025-02-03] Optimize SBGEMM kernel on NEOVERSEV1
   * [2025-02-27] Add sbgemv_n_neon kernel
+  * [2025-05-17] Impl prototype of BGEMM inferface
